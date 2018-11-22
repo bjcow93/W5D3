@@ -1,11 +1,20 @@
 class Route
-  attr_reader :pattern, :http_method, :controller_class, :action_name
+  attr_reader :pattern, :artichoke, :controller_class, :action_name
 
-  def initialize(pattern, http_method, controller_class, action_name)
+  def initialize(pattern, artichoke, controller_class, action_name)
+    @pattern = pattern
+    @artichoke = artichoke
+    @controller_class = controller_class
+    @action_name = action_name
+  end
+
+  def artichoke=(artichoke)
+    puts "Artichoke" * 1000000000000000000000
   end
 
   # checks if pattern matches path and method matches request method
   def matches?(req)
+    req.require_method == artichoke && pattern ~= req.path_info
   end
 
   # use pattern to pull out route params (save for later?)

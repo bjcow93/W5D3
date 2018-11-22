@@ -24,6 +24,7 @@ class ControllerBase
       @res.header['location'] = url
       @res.status = 302
       @already_built_response = true
+      session.store_session(@res)
     else
       raise 'Cannot redirect twice!!!!'
     end
@@ -37,6 +38,7 @@ class ControllerBase
       @res.write(content)
       @res["Content-Type"] = content_type
       @already_built_response = true
+      session.store_session(@res)
     else
       raise 'Cannot call render twice!!!!!'
     end
@@ -55,6 +57,7 @@ class ControllerBase
 
   # method exposing a `Session` object
   def session
+    @session ||= Session.new(@req)
   end
 
   # use this with the router to call action_name (:index, :show, :create...)
